@@ -1,0 +1,1 @@
+java -jar openapi-generator-cli.jar generate -i api-docs.json -g k6 -o ./k6-tests

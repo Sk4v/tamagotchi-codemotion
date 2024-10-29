@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/2.0" id="Definitions_0mq9cfs" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.27.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.5.0">
+  <decision id="Decision_0s896m8" name="suitability engine">
+    <decisionTable id="DecisionTable_02zq1tg" hitPolicy="ANY">
+      <input id="Input_1" label="riskProfile" biodi:width="350">
+        <inputExpression id="InputExpression_1" typeRef="string">
+          <text>riskProfile</text>
+        </inputExpression>
+        <inputValues id="UnaryTests_0ihqkx9">
+          <text>"conservative","aggressive","balanced"</text>
+        </inputValues>
+      </input>
+      <input id="InputClause_0ngf3bo" label="timeHorizon" biodi:width="273">
+        <inputExpression id="LiteralExpression_0xlgw8b" typeRef="string">
+          <text>timeHorizon</text>
+        </inputExpression>
+        <inputValues id="UnaryTests_1iwb7dp">
+          <text>"short","long"</text>
+        </inputValues>
+      </input>
+      <output id="Output_1" label="volatility" name="volatility" typeRef="string" biodi:width="192">
+        <outputValues id="UnaryTests_1pnpyql">
+          <text>"&gt;= 20","&gt;= 10 and &lt; 20","&lt; 10"</text>
+        </outputValues>
+      </output>
+      <output id="OutputClause_0jwlwas" label="asset" name="asset" typeRef="string">
+        <outputValues id="UnaryTests_1djib4m">
+          <text>"equity","bond"</text>
+        </outputValues>
+      </output>
+      <rule id="DecisionRule_135ofsu">
+        <inputEntry id="UnaryTests_0jyb7cq">
+          <text>"conservative"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0hdqbrh">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_03lh574">
+          <text>"&lt;10"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_00a7p06">
+          <text>null</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_075p1md">
+        <inputEntry id="UnaryTests_1dl91yu">
+          <text>"balanced"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_01ae5yg">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_19htul7">
+          <text>"&gt;=10,&lt;20"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_04hh96r">
+          <text>null</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0a3l4mx">
+        <inputEntry id="UnaryTests_06v67mo">
+          <text>"aggressive"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1xshoeh">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_19yg28m">
+          <text>"&gt;=20"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1f45s4p">
+          <text>null</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_115300i">
+        <inputEntry id="UnaryTests_17tmbhh">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1gn392l">
+          <text>"long"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0fvsglq">
+          <text>null</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0nlpuj3">
+          <text>"equity"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1js2o6v">
+        <inputEntry id="UnaryTests_0bkquyg">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_029cltg">
+          <text>"short"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1tki4ub">
+          <text>null</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_02pqxay">
+          <text>"bond"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape dmnElementRef="Decision_0s896m8">
+        <dc:Bounds height="80" width="180" x="160" y="100" />
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

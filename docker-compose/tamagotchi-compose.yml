@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  sonarqube:
+    image: sonar-custom:latest #defined on sonar/Dockerfile
+    container_name: sonarqube
+    ports:
+      - "9000:9000"
+    networks:
+      - app_net
+
+  #based on awesome-compose https://github.com/docker/awesome-compose/tree/master/prometheus-grafana
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    command:
+      - '--web.enable-remote-write-receiver'
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    ports:
+      - 9090:9090
+    restart: unless-stopped
+    networks:
+      - app_net
+    hostname: prometheus
+    volumes:
+      - ./prometheus:/etc/prometheus
+      - prom_data:/prometheus
+
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    ports:
+      - 3000:3000
+    restart: unless-stopped
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=grafana
+    networks:
+      - app_net
+    volumes:
+      - ./grafana/datasource.yml:/etc/grafana/provisioning/datasources/datasource.yml
+      - ./grafana/dashboard.yaml:/etc/grafana/provisioning/dashboards/dashboard.yaml
+      - ./grafana/dashboards:/var/lib/grafana/dashboards  
+
+
+volumes:
+  prom_data:
+  
+networks:
+  app_net: #same network of engine-compose
+

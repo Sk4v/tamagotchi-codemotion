@@ -1,0 +1,19 @@
+meta {
+  name: Suitability Check
+  type: http
+  seq: 3
+}
+
+post {
+  url: http://localhost:8080/suitability/check
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "riskProfile": "AGGRESSIVE",
+    "timeHorizon": "LONG",
+    "region": "WORLD"
+  }
+}

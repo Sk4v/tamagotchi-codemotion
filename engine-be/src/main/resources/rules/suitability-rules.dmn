@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/2.0" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" id="Definitions_0mq9cfs" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.27.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.5.0">
+  <decision id="Decision_0s896m8" name="volatility rules">
+    <informationRequirement id="InformationRequirement_1h5qts9">
+      <requiredInput href="#InputData_1wy31nh" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_02zq1tg" hitPolicy="ANY">
+      <input id="Input_1" label="riskProfile" biodi:width="350">
+        <inputExpression id="InputExpression_1" typeRef="string">
+          <text>riskProfile</text>
+        </inputExpression>
+        <inputValues id="UnaryTests_0ihqkx9">
+          <text>"conservative","aggressive","balanced"</text>
+        </inputValues>
+      </input>
+      <output id="Output_1" label="volatility" name="threshold" typeRef="string" biodi:width="192">
+        <outputValues id="UnaryTests_01ssejj">
+          <text>"&gt;= 20","&gt;= 10 and &lt; 20","&lt; 10"</text>
+        </outputValues>
+      </output>
+      <rule id="DecisionRule_135ofsu">
+        <inputEntry id="UnaryTests_0jyb7cq">
+          <text>"conservative"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_03lh574">
+          <text>"&lt; 10"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_075p1md">
+        <inputEntry id="UnaryTests_1dl91yu">
+          <text>"balanced"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_19htul7">
+          <text>"&gt;= 10 and &lt; 20"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0a3l4mx">
+        <inputEntry id="UnaryTests_06v67mo">
+          <text>"aggressive"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_19yg28m">
+          <text>"&gt;= 20"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <inputData id="InputData_1wy31nh" name="riskProfile" />
+  <inputData id="InputData_1ce473c" name="timeHorizon" />
+  <decision id="Decision_09bbvlk" name="asset rules">
+    <informationRequirement id="InformationRequirement_1mkclno">
+      <requiredInput href="#InputData_1ce473c" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_0nyknz5" hitPolicy="ANY">
+      <input id="InputClause_17618fp" label="timeHorizon">
+        <inputExpression id="LiteralExpression_1jc72cf" typeRef="string">
+          <text>timeHorizon</text>
+        </inputExpression>
+        <inputValues id="UnaryTests_0iimape">
+          <text>"short","long"</text>
+        </inputValues>
+      </input>
+      <output id="OutputClause_0t86j9p" label="asset" name="asset" typeRef="string">
+        <outputValues id="UnaryTests_1iopgzy">
+          <text>"equity","bond"</text>
+        </outputValues>
+      </output>
+      <rule id="DecisionRule_1904qps">
+        <inputEntry id="UnaryTests_1lhdj3l">
+          <text>"short"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_17l0awi">
+          <text>"bond"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_16983u9">
+        <inputEntry id="UnaryTests_109ldz8">
+          <text>"long"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0f13qco">
+          <text>"equity"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape dmnElementRef="Decision_0s896m8">
+        <dc:Bounds height="80" width="180" x="160" y="100" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0gpnlre" dmnElementRef="InputData_1wy31nh">
+        <dc:Bounds height="45" width="125" x="187" y="258" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0jhsqwj" dmnElementRef="InputData_1ce473c">
+        <dc:Bounds height="45" width="125" x="407" y="258" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_02tzv2s" dmnElementRef="InformationRequirement_1h5qts9">
+        <di:waypoint x="250" y="258" />
+        <di:waypoint x="250" y="200" />
+        <di:waypoint x="250" y="180" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_0gbphpo" dmnElementRef="InformationRequirement_1mkclno">
+        <di:waypoint x="470" y="258" />
+        <di:waypoint x="470" y="200" />
+        <di:waypoint x="470" y="180" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0616bem" dmnElementRef="Decision_09bbvlk">
+        <dc:Bounds height="80" width="180" x="380" y="100" />
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

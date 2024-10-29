@@ -1,0 +1,60 @@
+version: '3.2'
+
+services:
+  camunda:
+    image: camunda/zeebe:latest
+    container_name: camunda_container
+    ports:
+      - "26500:26500"    
+    networks:
+      - app_net
+    hostname: camunda
+    volumes:
+      - /app/camunda-zeebe/logs:/camunda-zeebe/logs
+
+  postgres:
+    image: postgres:latest
+    container_name: postgres_container
+    ports:
+      - "5432:5432"    
+    networks:
+      - app_net
+    hostname: postgres
+    volumes:
+      - /app/postgres/logs:/postgres/logs
+
+  suitability-engine:
+    image: suitability-engine:latest
+    container_name: engine_be_container
+    restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+      - camunda
+      - postgres
+    environment:
+      ZEEBE_CLIENT_BROKER_GRPCADDRESS: http://camunda:26500
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/mydatabase
+      SPRING_DATASOURCE_USERNAME: myuser
+      SPRING_DATASOURCE_PASSWORD: mypassword
+    networks:
+      - app_net
+    hostname: enginebe
+    volumes:
+      - /app/suitability-engine/logs:/suitability-engine/logs
+
+  vue-app:
+    image: engine-fe
+    ports:
+      - "3001:3001"
+    environment:
+      - VUE_APP_PROXY_TARGET=http://enginebe:8080/
+    volumes:
+      - .:/app
+    stdin_open: true
+    networks:
+      - app_net
+    tty: true
+
+networks:
+  app_net:
